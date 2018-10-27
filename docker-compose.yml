@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  db:
+    image: mariadb:latest
+    hostname: mariadb
+  redis:
+    image: redis:latest
+    hostname: redis
+  web:
+    restart: always
+    environment:
+      - NODE_ENV=production
+      - RHOST=redis
+    build: .
+    command: python3 manage.py runserver 0.0.0.0:8080
+    volumes:
+      - .:/snowboard_stuff
+    ports:
+      - "8080:8080"
+    depends_on:
+      - redis
+      - db
