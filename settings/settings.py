@@ -50,7 +50,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'snb.urls'
+ROOT_URLCONF = 'settings.urls'
+
+MIGRATION_MODULES = {'store': 'migrations'}
 
 TEMPLATES = [
     {
@@ -68,7 +70,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'snb.wsgi.application'
+WSGI_APPLICATION = 'wsgi.application'
 
 
 # Database
