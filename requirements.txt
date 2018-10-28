@@ -2,3 +2,7 @@ Django==2.1.2
 ipython
 redis
 mysqlclient
+djangorestframework==3.9
+markdown
+django-filter
+flake8
