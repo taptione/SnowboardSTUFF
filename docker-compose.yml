@@ -23,7 +23,7 @@ services:
       - NODE_ENV=production
       - RHOST=redis
     build: .
-    command: python3 manage.py runserver 0.0.0.0:8080
+    command: python3 manage.py runserver 0.0.0.0:8080 --settings=settings.dev_settings
     volumes:
       - .:/snowboard_stuff
     ports:
