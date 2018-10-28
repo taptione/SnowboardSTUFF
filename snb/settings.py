@@ -75,8 +75,16 @@ WSGI_APPLICATION = 'snb.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'snb',
+        'USER': 'snb_user',
+        'PASSWORD': '123456',
+        'HOST': 'db',
+        'PORT': 3306,
+        'default-character-set': 'utf8',
+        'OPTIONS': {
+            'sql_mode': 'traditional',
+        }
     }
 }
 

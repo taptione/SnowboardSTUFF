@@ -3,7 +3,17 @@ version: '3'
 services:
   db:
     image: mariadb:latest
-    hostname: mariadb
+    restart: always
+    environment:
+      - MYSQL_HOST=localhost
+      - MYSQL_PORT=3306  # cannot change this port to other number
+      - MYSQL_ROOT_HOST=%
+      - MYSQL_DATABASE=snb
+      - MYSQL_USER=snb_user
+      - MYSQL_PASSWORD=123456
+      - MYSQL_ROOT_PASSWORD=toor
+    ports:
+      - "3302:3306"
   redis:
     image: redis:latest
     hostname: redis
@@ -19,5 +29,5 @@ services:
     ports:
       - "8080:8080"
     depends_on:
-      - redis
       - db
+      - redis
