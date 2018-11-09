@@ -3,6 +3,7 @@ from django.core.mail import send_mail
 from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.base_user import AbstractBaseUser
 from store.managers import UserManager
+from rest_framework.authtoken.models import Token
 
 
 class User(AbstractBaseUser, PermissionsMixin):
@@ -43,3 +44,11 @@ class User(AbstractBaseUser, PermissionsMixin):
         Sends an email to this User.
         """
         send_mail(subject, message, from_email, [self.email], **kwargs)
+
+
+class ExpiredToken(Token):
+    modified = models.DateTimeField(auto_now=True)
+    is_expired = models.BooleanField(default=False)
+
+    class Meta:
+        proxy = True

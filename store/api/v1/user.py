@@ -8,9 +8,12 @@ from rest_framework.exceptions import APIException
 
 User = get_user_model()
 
+from store.models import ExpiredToken
+
 
 class BearerToken(TokenAuthentication):
     keyword = 'Bearer'
+    model = ExpiredToken
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
