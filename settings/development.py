@@ -1,0 +1,2 @@
+from settings.common import *
+
