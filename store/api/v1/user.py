@@ -1,16 +1,19 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers, viewsets
-from rest_framework.authentication import BasicAuthentication, TokenAuthentication
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.exceptions import APIException
+from store.models.models import ExpiredToken
 # from rest_framework.permissions import IsAuthenticated
 # from django.core.mail import send_mail
 # from settings.dev_settings import EMAIL_HOST_USER
-from rest_framework.exceptions import APIException
+
 
 User = get_user_model()
 
 
 class BearerToken(TokenAuthentication):
     keyword = 'Bearer'
+    model = ExpiredToken
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
