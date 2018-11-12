@@ -1,7 +1,6 @@
 from django.urls import path, include
 from rest_framework import routers
-
-from store.api.v1.user import UserViewSet
+from store.api.controllers.user.client.v1 import UserViewSet
 
 router = routers.DefaultRouter()
 router.register(r'users', UserViewSet)

@@ -3,8 +3,8 @@ from rest_framework import serializers, viewsets
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.exceptions import APIException
 from store.models.models import ExpiredToken
-from django.core.mail import send_mail
-from settings.development import EMAIL_HOST_USER
+# from django.core.mail import send_mail
+# from settings.development import EMAIL_HOST_USER
 # from rest_framework.permissions import IsAuthenticated
 
 User = get_user_model()
@@ -35,14 +35,15 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         user.set_password(password)
         user.save()
         # success register mail
-        subject = 'snowboard staff successful registration'
-        message = 'Than`x 4 register {}. Your password {}'.format(user.first_name, password)
-        send_mail(subject, message, EMAIL_HOST_USER, [user.email])
+        # subject = 'snowboard staff successful registration'
+        # message = 'Than`x 4 register {}. Your password {}'.format(user.first_name, password)
+        # send_mail(subject, message, EMAIL_HOST_USER, [user.email])
         return user
 
 
 class UserViewSet(viewsets.ModelViewSet):
     # authentication_classes = (BearerToken, BasicAuthentication)
     # permission_classes = (IsAuthenticated,)
+    http_method_names = ('get', 'post', 'options')
     queryset = User.objects.all()
     serializer_class = UserSerializer

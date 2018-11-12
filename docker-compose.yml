@@ -1,9 +1,11 @@
-version: '3'
+version: '3.3'
 
 services:
   db:
     image: mariadb:latest
     restart: always
+    volumes:
+      - snb_db:/var/lib/mysql
     environment:
       - MYSQL_HOST=localhost
       - MYSQL_PORT=3306  # cannot change this port to other number
@@ -17,11 +19,16 @@ services:
   redis:
     image: redis:latest
     hostname: redis
+    depends_on:
+    - db
   web:
     restart: always
     environment:
       - NODE_ENV=production
       - RHOST=redis
+      - SLEEP_LENGTH=5
+    links:
+      - db
     build: .
     command: python3 manage.py runserver 0.0.0.0:8080 --settings=settings.development
     volumes:
@@ -31,3 +38,6 @@ services:
     depends_on:
       - db
       - redis
+
+volumes:
+  snb_db:
