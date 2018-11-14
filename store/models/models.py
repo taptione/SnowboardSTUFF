@@ -68,7 +68,7 @@ class Category(models.Model):
 
 
 class Item(models.Model):
-     mame = models.CharField(
+    name = models.CharField(
         max_length=256,
         verbose_name='Item name'
     )
@@ -134,6 +134,7 @@ class Size(models.Model):
         db_table = 'sizes'
         verbose_name = 'Size'
 
+
 class Gender(models.Model):
     name = models.CharField(
         max_length=64,
@@ -146,6 +147,7 @@ class Gender(models.Model):
     class Meta:
         db_table = 'genders'
         verbose_name = 'Gender'
+
 
 class ItemStatus(models.Model):
     name = models.CharField(
