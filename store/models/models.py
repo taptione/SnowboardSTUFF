@@ -37,129 +37,137 @@ class ExpiredToken(Token):
 class Brand(models.Model):
     name = models.CharField(
         max_length=64,
-        verbose_name=u'Назва бренду'
+        verbose_name='Brand name'
     )
-
-    class Meta:
-        db_table = 'brand'
-        verbose_name = u'Бренд'
-        verbose_name_plural = u'Бренди'
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        db_table = 'brands'
+        verbose_name = 'Brand'
 
 
 class Category(models.Model):
     name = models.CharField(
         max_length=64,
-        verbose_name=u'Назва категорії'
+        verbose_name='Category'
     )
     parent_category = models.ForeignKey(
         'Category',
         on_delete=None,
-        null=True,
-        verbose_name=u'Основна категорія'
+        verbose_name='Parent category'
     )
-
-    class Meta:
-        db_table = 'category'
-        verbose_name = u'Категорія'
-        verbose_name_plural = u'Категорії'
 
     def __str__(self):
         return self.name
 
+    class Meta:
+        db_table = 'categories'
+        verbose_name = 'Category'
+
 
 class Item(models.Model):
-    class Meta:
-        db_table = 'item'
-        verbose_name = u'Товар'
-        verbose_name_plural = u'Товари'
-
-    mame = models.CharField(
+     mame = models.CharField(
         max_length=256,
-        verbose_name=u'Назва товару'
+        verbose_name='Item name'
     )
     gender = models.ForeignKey(
         'Gender',
         on_delete=None,
-        blank=True,
         null=True,
-        verbose_name=u'Стать, вік'
+        verbose_name='Gender',
+        related_name='gender_set'
     )
     size = models.ManyToManyField(
         'Size',
         null=True,
-        blank=True,
-        verbose_name=u'Розмір'
+        verbose_name='Size',
+        related_name='size_set'
     )
     quantity = models.CharField(
         max_length=4,
-        blank=True,
-        verbose_name=u'Кількість одиниць'
+        verbose_name='Quantity'
     )
     price = models.IntegerField(
         default=0,
-        verbose_name=u'Ціна'
+        verbose_name='Price'
     )
     status = models.ForeignKey(
         'ItemStatus',
         on_delete=None,
-        verbose_name=u'Наявність'
+        verbose_name='Item status',
+        related_name='item_status_set'
+    )
+    description = models.TextField(
+        verbose_name='Description'
+    )
+    image = models.ForeignKey(
+        'Image',
+        on_delete=None,
+        verbose_name='Image',
+        related_name='image_set'
     )
 
     def __str__(self):
         return self.mame, self.gender, self.size, self.price, self.status
 
+    class Meta:
+        db_table = 'items'
+        verbose_name = 'Item'
+
 
 class Size(models.Model):
     value = models.CharField(
         max_length=32,
-        verbose_name=u'Значення'
+        verbose_name='Value'
     )
     unit = models.CharField(
         max_length=32,
-        verbose_name=u'Одиниці вимірювання'
+        verbose_name='Units'
     )
-
-    class Meta:
-        db_table = 'size'
-        verbose_name = u'Розмір'
 
     def __str__(self):
         return self.value, self.unit
 
+    class Meta:
+        db_table = 'sizes'
+        verbose_name = 'Size'
 
 class Gender(models.Model):
     name = models.CharField(
         max_length=64,
-        verbose_name=u'Стать'
+        verbose_name='Gender'
     )
-
-    class Meta:
-        db_table = 'gender'
-        verbose_name = u'Стать'
 
     def __str__(self):
         return self.name
 
+    class Meta:
+        db_table = 'genders'
+        verbose_name = 'Gender'
 
 class ItemStatus(models.Model):
     name = models.CharField(
         max_length=64,
-        verbose_name=u'Наявність'
+        verbose_name='Item status'
     )
-
-    class Meta:
-        db_table = 'item_status'
 
     def __str__(self):
         return self.name
 
+    class Meta:
+        db_table = 'item_statuses'
+        verbose_name = 'Item status'
+
 
 class Image(models.Model):
-    image_name = models.CharField(max_length=128)
+    name = models.CharField(max_length=128)
     is_main = models.BooleanField(default=False)
 
+    def __str__(self):
+        return self.name
+
     class Meta:
-        db_table = 'image'
+        db_table = 'images'
+        verbose_name = 'Image'
