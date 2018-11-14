@@ -1,9 +1,8 @@
-version: '3.3'
+version: '3.6'
 
 services:
   db:
     image: mariadb:latest
-    restart: always
     volumes:
       - snb_db:/var/lib/mysql
     environment:
@@ -19,8 +18,6 @@ services:
   redis:
     image: redis:latest
     hostname: redis
-    depends_on:
-    - db
   web:
     restart: always
     environment:
@@ -30,14 +27,10 @@ services:
     links:
       - db
     build: .
-    command: python3 manage.py runserver 0.0.0.0:8080 --settings=settings.development
+    command: bash -c "python3 manage.py migrate --noinput --settings=settings.development && python3 manage.py runserver 0.0.0.0:8080 --settings=settings.development"
     volumes:
       - .:/snowboard_stuff
     ports:
       - "8080:8080"
-    depends_on:
-      - db
-      - redis
-
 volumes:
   snb_db:
